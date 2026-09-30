@@ -1,0 +1,6 @@
+,MAE,RMSE,MAPE %
+Baseline: same hour last week,1163.47,1745.25,9.89
+XGBoost (no weather),399.86,579.01,3.43
+XGBoost (with weather),345.63,518.08,2.97
+SARIMA (1 week only),1374.43,1589.27,11.09
+LSTM,195.63,257.16,1.72
