@@ -3,7 +3,7 @@
 Streamlit app that shows hourly electricity load forecasts on a held-out test period,
 comparing a naive baseline with XGBoost (with and without weather).
 
-**Live app:** _add your Streamlit link here after deploying_
+**Live app:** (https://energyconsumptionforecasting-3abkbqypyaj6zna7ltvq5s.streamlit.app/)
 
 ## Files
 - `app.py` - the Streamlit app
