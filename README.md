@@ -5,16 +5,29 @@
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Repo Size](https://img.shields.io/github/repo-size/navyaa-sh28/energy_consumption_forecasting)](https://github.com/navyaa-sh28/energy_consumption_forecasting)
 
+A polished, production-friendly repository for hourly electricity load forecasting. This project demonstrates data ingestion, exploratory analysis, feature engineering, model training (baseline and XGBoost), and a lightweight Streamlit dashboard for forecasting and comparison.
 
-A polished, production-friendly repository for hourly electricity load forecasting. This project demonstrates data ingestion, exploratory analysis, feature engineering, model training (baseline and XGBoost), evaluation, and an interactive Streamlit application.
+---
+
+## App snapshots
+
+### Dashboard overview
+
+![Electricity Load Forecasting dashboard](docs/images/snapshot-dashboard.svg)
+
+### Forecast comparison and model performance
+
+![Forecast comparison and model performance chart](docs/images/snapshot-model-comparison.svg)
+
+### Error metrics
+
+![Error metrics table](docs/images/snapshot-error-metrics.svg)
 
 ---
 
 Hero demo
 
 > Live interactive demo: https://energyconsumptionforecasting-3abkbqypyaj6zna7ltvq5s.streamlit.app/
-
-![Demo placeholder](docs/images/hero_demo.gif)
 
 ---
 
@@ -100,7 +113,7 @@ https://www.kaggle.com/datasets/robikscube/hourly-energy-consumption
 
 Architecture
 
-The repository has an offline training/evaluation path and a lightweight inference/visualization path. Training produces the files consumed by `app.py`; the Streamlit app does not retrain the model or call an external API at runtime.
+The repository has an offline training/evaluation path and a lightweight inference/visualization path. Training produces the files consumed by `app.py`; the Streamlit app does not retrain the model during runtime.
 
 ```mermaid
 flowchart LR
@@ -151,7 +164,7 @@ flowchart LR
     class app,controls,charts runtime
 ```
 
-The deployed application reads the committed prediction and metric artifacts, filters the selected test-period window, calculates window metrics, and renders the charts. The dashed links indicate optional or future-use inputs rather than required runtime dependencies.
+The deployed application reads the committed prediction and metric artifacts, filters the selected test-period window, calculates window metrics, and renders the charts. The dashed links indicate optional or future workflow connections.
 
 ---
 
@@ -178,8 +191,6 @@ plt.legend()
 plt.title('Actual vs XGBoost Prediction — Hourly Load')
 plt.show()
 ```
-
-Add your own `docs/images/` screenshots or export figures from notebooks and replace the placeholders in this README to make it more attractive.
 
 ---
 
