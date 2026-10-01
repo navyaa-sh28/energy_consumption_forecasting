@@ -1,610 +1,144 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
-  <defs>
-    <linearGradient id="bg" x1="0" x2="1">
-      <stop offset="0%" stop-color="#0b1220"/>
-      <stop offset="100%" stop-color="#07111b"/>
-    </linearGradient>
-    <linearGradient id="panel" x1="0" x2="0" y1="0" y2="1">
-      <stop offset="0%" stop-color="#151d2e"/>
-      <stop offset="100%" stop-color="#101822"/>
-    </linearGradient>
-    <linearGradient id="accent" x1="0" x2="1">
-      <stop offset="0%" stop-color="#f59e0b"/>
-      <stop offset="100%" stop-color="#f97316"/>
-    </linearGradient>
-    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#000000" flood-opacity="0.35"/>
-    </filter>
-  </defs>
-
-  <rect width="1600" height="900" fill="url(#bg)"/>
-
-  <rect x="0" y="0" width="330" height="900" fill="#1a212f"/>
-  <rect x="330" y="0" width="1270" height="900" fill="#07131d"/>
-
-  <text x="45" y="88" fill="#f1f5f9" font-family="Segoe UI, sans-serif" font-size="31" font-weight="700">Controls</text>
-  <text x="45" y="165" fill="#cbd5e1" font-family="Segoe UI, sans-serif" font-size="22">Start date</text>
-  <rect x="45" y="186" width="220" height="50" rx="8" fill="#161f2a" stroke="#2b3b4e"/>
-  <text x="68" y="219" fill="#f8fafc" font-family="Segoe UI, sans-serif" font-size="20">2017/01/01</text>
-
-  <text x="45" y="303" fill="#cbd5e1" font-family="Segoe UI, sans-serif" font-size="22">Window</text>
-  <g transform="translate(45,325)">
-    <circle cx="12" cy="12" r="10" fill="none" stroke="#f8fafc" stroke-width="2"/>
-    <circle cx="12" cy="12" r="4" fill="#f8fafc" opacity="0.2"/>
-    <text x="35" y="18" fill="#e2e8f0" font-family="Segoe UI, sans-serif" font-size="18">24 hours</text>
-  </g>
-  <g transform="translate(45,370)">
-    <circle cx="12" cy="12" r="10" fill="none" stroke="#f8fafc" stroke-width="2"/>
-    <text x="35" y="18" fill="#e2e8f0" font-family="Segoe UI, sans-serif" font-size="18">7 days</text>
-  </g>
-  <g transform="translate(45,415)">
-    <circle cx="12" cy="12" r="10" fill="none" stroke="#f8fafc" stroke-width="2"/>
-    <text x="35" y="18" fill="#e2e8f0" font-family="Segoe UI, sans-serif" font-size="18">30 days</text>
-  </g>
+# Electricity Load Forecasting
 
-  <text x="45" y="520" fill="#cbd5e1" font-family="Segoe UI, sans-serif" font-size="22">Models to show</text>
-  <g transform="translate(45,545)">
-    <rect x="0" y="0" width="200" height="48" rx="8" fill="#d14f46"/>
-    <text x="16" y="30" fill="#fff" font-family="Segoe UI, sans-serif" font-size="20">Baseline (same hour la...</text>
-    <text x="172" y="29" fill="#fff" font-family="Segoe UI, sans-serif" font-size="18">×</text>
-  </g>
-  <g transform="translate(45,600)">
-    <rect x="0" y="0" width="200" height="48" rx="8" fill="#d14f46" opacity="0.9"/>
-    <text x="16" y="30" fill="#fff" font-family="Segoe UI, sans-serif" font-size="20">XGBoost (no weather)</text>
-    <text x="172" y="29" fill="#fff" font-family="Segoe UI, sans-serif" font-size="18">×</text>
-  </g>
-  <g transform="translate(45,655)">
-    <rect x="0" y="0" width="200" height="48" rx="8" fill="#d14f46" opacity="0.8"/>
-    <text x="16" y="30" fill="#fff" font-family="Segoe UI, sans-serif" font-size="20">XGBoost (with weather)</text>
-    <text x="172" y="29" fill="#fff" font-family="Segoe UI, sans-serif" font-size="18">×</text>
-  </g>
+[![Streamlit](https://img.shields.io/badge/Streamlit-App-orange)](https://energyconsumptionforecasting-3abkbqypyaj6zna7ltvq5s.streamlit.app/)
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Repo Size](https://img.shields.io/github/repo-size/navyaa-sh28/energy_consumption_forecasting)](https://github.com/navyaa-sh28/energy_consumption_forecasting)
 
-  <rect x="350" y="40" width="1170" height="760" fill="none"/>
-  <text x="480" y="90" fill="#f8fafc" font-family="Segoe UI, sans-serif" font-size="52" font-weight="800">Electricity Load Forecasting</text>
-  <text x="500" y="145" fill="#cbd5e1" font-family="Segoe UI, sans-serif" font-size="23">Hourly grid load (MW) forecast with time series ML: baseline vs XGBoost, with and without weather.</text>
+A polished end-to-end project for hourly electricity demand forecasting using time-series machine learning. The repository compares baseline methods with XGBoost models, evaluates forecast quality on a held-out test window, and packages the results in a Streamlit dashboard.
 
-  <rect x="480" y="175" width="970" height="76" rx="8" fill="#113d5e"/>
-  <text x="510" y="225" fill="#dfeeff" font-family="Segoe UI, sans-serif" font-size="22">Backtest mode. This app shows predictions on a held-out test period (2017-01-01 to 2018-08-03) that the models never saw during training. The data is historical (PJM dataset, ends around 2018), so this is a demonstration of forecast quality, not a live forecast. Scope: electricity demand only.</text>
+## Live demo
 
-  <g transform="translate(500,270)">
-    <text x="0" y="28" fill="#f8fafc" font-family="Segoe UI, sans-serif" font-size="22" font-weight="700">Forecast</text>
-    <rect x="100" y="6" width="110" height="2" fill="#f59e0b"/>
-    <text x="135" y="28" fill="#dbe5ee" font-family="Segoe UI, sans-serif" font-size="22">Model comparison</text>
-    <text x="330" y="28" fill="#dbe5ee" font-family="Segoe UI, sans-serif" font-size="22">About</text>
-  </g>
+Try the app here:
 
-  <g transform="translate(500,330)">
-    <line x1="0" y1="0" x2="1000" y2="0" stroke="#283548" stroke-width="1.5"/>
-    <text x="0" y="-20" fill="#f8fafc" font-family="Segoe UI, sans-serif" font-size="18">15k</text>
-    <text x="0" y="104" fill="#f8fafc" font-family="Segoe UI, sans-serif" font-size="18">14k</text>
-    <text x="0" y="228" fill="#f8fafc" font-family="Segoe UI, sans-serif" font-size="18">13k</text>
-    <text x="0" y="352" fill="#f8fafc" font-family="Segoe UI, sans-serif" font-size="18">12k</text>
-    <text x="0" y="476" fill="#f8fafc" font-family="Segoe UI, sans-serif" font-size="18">11k</text>
-    <text x="0" y="600" fill="#f8fafc" font-family="Segoe UI, sans-serif" font-size="18">10k</text>
-    <text x="0" y="724" fill="#f8fafc" font-family="Segoe UI, sans-serif" font-size="18">9k</text>
-  </g>
+https://energyconsumptionforecasting-3abkbqypyaj6zna7ltvq5s.streamlit.app/
 
-  <g transform="translate(565,330)">
-    <g fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M0,670 L40,640 L80,620 L120,640 L160,570 L200,490 L240,520 L280,480 L320,450 L360,520 L400,470 L440,510 L480,500 L520,480 L560,420 L600,390 L640,360 L680,430 L720,470 L760,500 L800,520 L840,510 L880,470 L920,440 L960,480 L1000,430" stroke="#f59e0b"/>
-      <path d="M0,640 L40,610 L80,590 L120,530 L160,490 L200,470 L240,500 L280,450 L320,430 L360,500 L400,440 L440,390 L480,380 L520,360 L560,340 L600,370 L640,330 L680,310 L720,340 L760,360 L800,330 L840,310 L880,280 L920,320 L960,290 L1000,330" stroke="#f8fafc" stroke-dasharray="3 6"/>
-      <path d="M0,650 L40,630 L80,600 L120,560 L160,530 L200,500 L240,490 L280,470 L320,430 L360,470 L400,450 L440,420 L480,440 L520,410 L560,350 L600,330 L640,310 L680,410 L720,430 L760,440 L800,410 L840,390 L880,330 L920,360 L960,320 L1000,300" stroke="#f87171" stroke-dasharray="1 6"/>
-      <path d="M0,700 L40,680 L80,660 L120,640 L160,620 L200,600 L240,570 L280,560 L320,530 L360,560 L400,520 L440,500 L480,480 L520,460 L560,440 L600,410 L640,390 L680,430 L720,450 L760,490 L800,510 L840,490 L880,430 L920,410 L960,390 L1000,360" stroke="#60a5fa"/>
-    </g>
-    <g>
-      <rect x="0" y="-35" width="220" height="36" rx="6" fill="#111827" opacity="0.8"/>
-      <text x="15" y="-10" fill="#f8fafc" font-family="Segoe UI, sans-serif" font-size="16">Load (MW)</text>
-    </g>
-  </g>
+## App screenshots
 
-  <g transform="translate(470,750)">
-    <text x="0" y="0" fill="#e2e8f0" font-family="Segoe UI, sans-serif" font-size="18">Jan 1</text>
-    <text x="130" y="0" fill="#e2e8f0" font-family="Segoe UI, sans-serif" font-size="18">Jan 2</text>
-    <text x="270" y="0" fill="#e2e8f0" font-family="Segoe UI, sans-serif" font-size="18">Jan 3</text>
-    <text x="410" y="0" fill="#e2e8f0" font-family="Segoe UI, sans-serif" font-size="18">Jan 4</text>
-    <text x="550" y="0" fill="#e2e8f0" font-family="Segoe UI, sans-serif" font-size="18">Jan 5</text>
-    <text x="690" y="0" fill="#e2e8f0" font-family="Segoe UI, sans-serif" font-size="18">Jan 6</text>
-    <text x="830" y="0" fill="#e2e8f0" font-family="Segoe UI, sans-serif" font-size="18">Jan 7</text>
-  </g>
-</svg>
+### Dashboard overview
 
+![Electricity Load Forecasting dashboard](docs/images/snapshot-dashboard.svg)
 
+### Forecast comparison and model performance
 
+![Forecast comparison chart](docs/images/snapshot-model-comparison.svg)
 
+### Error metrics
 
+![Error metrics table](docs/images/snapshot-error-metrics.svg)
 
+## Why this project
 
+- Real-world hourly electricity load forecasting using the PJM dataset
+- Baseline vs XGBoost model comparison
+- Weather-aware and non-weather-aware forecasting variants
+- Clean time-window filtering and evaluation workflow
+- Streamlit app for exploration and reporting
 
+## Architecture
 
+```mermaid
+flowchart LR
+    A[Hourly energy load data\nPJM / Kaggle] --> B[Data ingestion and validation]
+    C[Weather data\noptional] --> D[Feature engineering]
+    B --> D
+    D --> E[Train/test split]
+    E --> F[Baseline models]
+    E --> G[XGBoost models]
+    F --> H[Backtest evaluation]
+    G --> H
+    H --> I[Metrics: MAE, RMSE, MAPE]
+    H --> J[Predictions artifact]
+    I --> K[Streamlit dashboard]
+    J --> K
+    K --> L[Forecast charts and error tables]
+```
 
+## Project structure
 
+```text
+energy_consumption_forecasting/
+├── app.py                     # Streamlit dashboard
+├── README.md                 # Project documentation
+├── requirements.txt          # Python dependencies
+├── predictions.csv           # Forecast outputs used by the app
+├── features.json             # Feature definition metadata
+├── xgb_model.json            # Optional trained model artifact
+├── notebooks/                # EDA and experiment notebooks
+├── docs/
+│   └── images/
+│       ├── snapshot-dashboard.svg
+│       ├── snapshot-model-comparison.svg
+│       └── snapshot-error-metrics.svg
+├── LICENSE
+└── .gitignore
+```
 
+## Quickstart
 
+### 1) Clone the repository
 
+```bash
+git clone https://github.com/navyaa-sh28/energy_consumption_forecasting.git
+cd energy_consumption_forecasting
+```
 
+### 2) Install dependencies
 
+```bash
+python -m venv .venv
+source .venv/bin/activate   # macOS / Linux
+# or on Windows:
+# .venv\Scripts\activate
+pip install -r requirements.txt
+```
 
+### 3) Run the app
 
+```bash
+streamlit run app.py
+```
 
+## Data
 
+This project uses the hourly electricity consumption dataset from Kaggle:
 
+https://www.kaggle.com/datasets/robikscube/hourly-energy-consumption
 
+The app uses historical demand data and compares model outputs across time windows.
 
+## Model strategy
 
+The forecasting workflow includes:
 
+- Baseline: same hour from the previous week
+- XGBoost without weather features
+- XGBoost with weather features
+- Evaluation using MAE, RMSE, and MAPE
 
+## Results summary
 
+The dashboard highlights the following patterns:
 
+- Weather-aware XGBoost yields the strongest performance
+- Baseline methods are useful as a benchmark
+- Errors decrease significantly when weather effects are included
 
+## Contributing
 
+Contributions are welcome. If you would like to improve the project:
 
+1. Fork the repository
+2. Create a feature branch
+3. Add or update tests or notebooks as needed
+4. Submit a pull request with a clear summary
 
+## License
 
+This project is licensed under the MIT License.
 
+## Contact
 
+- GitHub: https://github.com/navyaa-sh28
+- Repository: https://github.com/navyaa-sh28/energy_consumption_forecasting
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-"""
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-"""
