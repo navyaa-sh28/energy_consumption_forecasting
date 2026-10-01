@@ -6,7 +6,7 @@
 [![Repo Size](https://img.shields.io/github/repo-size/navyaa-sh28/energy_consumption_forecasting)](https://github.com/navyaa-sh28/energy_consumption_forecasting)
 
 
-A polished, production-friendly repository for hourly electricity load forecasting. This project demonstrates data ingestion, exploratory analysis, feature engineering, model training (baseline and ML models), evaluation, and a simple Streamlit demo.
+A polished, production-friendly repository for hourly electricity load forecasting. This project demonstrates data ingestion, exploratory analysis, feature engineering, model training (baseline and XGBoost), evaluation, and an interactive Streamlit application.
 
 ---
 
@@ -100,22 +100,58 @@ https://www.kaggle.com/datasets/robikscube/hourly-energy-consumption
 
 Architecture
 
-High-level pipeline:
+The repository has an offline training/evaluation path and a lightweight inference/visualization path. Training produces the files consumed by `app.py`; the Streamlit app does not retrain the model or call an external API at runtime.
 
 ```mermaid
 flowchart LR
-  A[Raw data (CSV / API)] --> B[Ingestion & validation]
-  B --> C[Preprocessing & feature engineering]
-  C --> D[Train / validation split]
-  D --> E[Model training (XGBoost / Baseline)]
-  E --> F[Evaluation & visualizations]
-  F --> G[Export artifacts (predictions, metrics, model files)]
-  G --> H[Streamlit demo / Reports]
-  style E fill:#ffd07a,stroke:#333,stroke-width:1px
-  style H fill:#c3f0ff,stroke:#333,stroke-width:1px
+    source[(Hourly Energy Consumption\nCSV / Kaggle)]
+    weather[(Historical weather\noptional)]
+
+    subgraph offline[Offline training and evaluation]
+        ingest[Load and validate data]
+        features[Clean series and engineer\ncalendar, lag, rolling, weather features]
+        split[Time-based train/test split]
+        train[Train models\nnaive baseline and XGBoost]
+        evaluate[Evaluate on held-out period\nMAE, RMSE, MAPE]
+    end
+
+    subgraph artifacts[Repository artifacts]
+        predictions[(predictions.csv)]
+        metrics[(metrics.csv)]
+        model[(xgb_model.json)]
+        feature_list[(features.json)]
+    end
+
+    subgraph runtime[Streamlit runtime]
+        app[app.py]
+        controls[Date, window, and model controls]
+        charts[Forecast charts and comparison tables]
+    end
+
+    source --> ingest
+    weather -.-> features
+    ingest --> features --> split --> train
+    train --> evaluate
+    train --> predictions
+    train --> model
+    features --> feature_list
+    evaluate --> metrics
+    predictions --> app
+    metrics --> app
+    app --> controls --> charts
+    model -. optional future inference .-> app
+
+    classDef input fill:#e8f5e9,stroke:#2e7d32,color:#1b5e20
+    classDef process fill:#fff3e0,stroke:#ef6c00,color:#7f3b00
+    classDef artifact fill:#f3e5f5,stroke:#7b1fa2,color:#4a148c
+    classDef runtime fill:#e1f5fe,stroke:#0277bd,color:#014c70
+    class source,weather input
+    class ingest,features,split,train,evaluate process
+    class predictions,metrics,model,feature_list artifact
+    class app,controls,charts runtime
 ```
 
-This simple diagram shows the flow from raw data to demo and reporting. Add further details in `notebooks/`.
+The deployed application reads the committed prediction and metric artifacts, filters the selected test-period window, calculates window metrics, and renders the charts. The dashed links indicate optional or future-use inputs rather than required runtime dependencies.
 
 ---
 
