@@ -16,13 +16,13 @@ Forecasting **hourly electricity demand (MW)** from past load, calendar features
 ## Screenshots
 
 ### Forecast view: actual vs predicted load
-![Forecast tab showing actual load against baseline and XGBoost predictions](docs/images/01-forecast.png)
+![Forecast tab showing actual load against baseline and XGBoost predictions](docs/images/Screenshot%202026-10-01%20152134.png)
 
 ### Error metrics for the selected window and the full test period
-![Error metrics table with window and full test results](docs/images/03-error-metrics.png)
+![Error metrics table with window and full test results](docs/images/Screenshot%202026-10-01%20152224.png)
 
 ### Model comparison across the full test period
-![Model comparison table and MAPE bar chart](docs/images/02-model-comparison.png)
+![Model comparison table and MAPE bar chart](docs/images/Screenshot%202026-10-01%20152211.png)
 
 ---
 
@@ -112,7 +112,7 @@ energy_consumption_forecasting/
 ├── xgb_model.json       # Trained XGBoost model (with weather)
 ├── README.md
 └── docs/
-    └── images/          # Screenshots used in this README
+    └── images/          # Dashboard screenshots used in this README
 ```
 
 ### Data files
